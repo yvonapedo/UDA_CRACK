@@ -1,0 +1,14 @@
+python train_tta.py \
+    experiment=ttda \
+    model/net=gta5_source \
+    datamodule/test_list=cfd \
+    model.cfg.bn_lambda=0.8 \
+    model.cfg.proto_lambda=0.8 \
+    model.cfg.fusion_lambda=0.8 \
+    model.cfg.confidence_threshold=0.9 \
+    model.cfg.proto_rho=0.1
+
+
+
+
+python train_tta.py  experiment=ttda  model/net=gta5_source datamodule/test_list=cfd model.cfg.bn_lambda=0.8 model.cfg.proto_lambda=0.8 model.cfg.fusion_lambda=0.8 model.cfg.confidence_threshold=0.9 model.cfg.proto_rho=0.1

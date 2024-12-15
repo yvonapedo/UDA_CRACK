@@ -15,7 +15,7 @@ Download the Cracktree200, CRACK500, CrackForest, CrackFCN, MVTec AD datasets an
 
 ```
 |-- datasets
-    |-- crack315
+    |-- cracktree200
         |-- train
         |   |-- train.txt
         |   |--img

@@ -185,7 +185,7 @@ class Net(nn.Module):
 
         return augtask_loss
 
-    def forward(self, content, style, mask, alpha=1.0):
+    def forward(self, content, style, alpha=1.0):
         assert 0 <= alpha <= 1
         style_feats = self.encode_with_intermediate(style)
         content_feat = self.encode(content)
@@ -203,23 +203,6 @@ class Net(nn.Module):
         # print(g_t_feats[0].shape) #torch.Size([1, 64, 384, 384])
         # print(style_feats[0].shape) #torch.Size([1, 64, 384, 384])
 
-
-        aug_fea = self.decoder2(content_feat)
-        loss_aug = self.augtask_loss(aug_fea, mask)
-        aug_fea2 = self.pw1(aug_fea)
-        gt2 = self.pw2(g_t)
-
-        # print("------------------")
-        # print(aug_fea2.shape)#torch.Size([1, 3, 384, 384])
-        # print(aug_fea.shape)# torch.Size([1, 1, 384, 384])
-        # print(mask.shape)# torch.Size([1, 1, 384, 384])
-        # print(gt2.shape)# torch.Size([1, 3, 384, 384])
-        # print("loss_aug======")
-        # print(aug_fea2.shape)
-        # print(mask.shape)
-
-        loss_ssm = loss_ss(aug_fea2, mask)
-        # loss_ssm = loss_ss(aug_fea2, gt2)
         for i in range(1, 4):
             loss_s += self.calc_style_loss(g_t_feats[i], style_feats[i])
-        return loss_c, loss_s, loss_aug, loss_ssm, g_t
+        return loss_c, loss_s, g_t

@@ -152,8 +152,9 @@ def TRAIN(train_loader, model, optimizer, epoch, save_path):
 
 
         # forward
-        loss_c_target, loss_s_target, loss_aug_target, loss_ssm_target, out_target = net_scst_target( imgsC2, imgsC1, pgtsC2)
-        loss_c_source, loss_s_source, loss_aug_source, loss_ssm_source, out_source = net_scst_source( imgsC1, imgsC2, pgtsC1)
+        loss_c_target, loss_s_target, out_target = net_scst_target( imgsC2, imgsC1)
+        loss_c_source, loss_s_source, out_source = net_scst_source( imgsC1, imgsC2)
+        
         imgST = out_target
         imgST = fourrier_update(imgST, imgsC1)
 
@@ -191,8 +192,8 @@ def TRAIN(train_loader, model, optimizer, epoch, save_path):
 
         loss = consistency_loss_t+consistency_loss_s+ LAMBDA_SEG *segC2_s_loss +LAMBDA_SEG *segC2_st_loss +  LAMBDA_ADV_TARGET1 * loss_Ds +   LAMBDA_ADV_TARGET2 * loss_Dt
 
-        loss_scst_t = loss_c_target + loss_s_target + loss_aug_target + loss_ssm_target
-        loss_scst_s = loss_c_source  + loss_s_source + loss_aug_source + loss_ssm_source
+        loss_scst_t = loss_c_target + loss_s_target  
+        loss_scst_s = loss_c_source  + loss_s_source  
 
         # back-propagation
         loss.backward(retain_graph=True)
